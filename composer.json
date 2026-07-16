@@ -1,0 +1,14 @@
+{
+    "name": "lombokclarion/container",
+    "description": "Explicit, compile-checked dependency injection container for LombokClarion. No auto-discovery of interface bindings; zero reflection at request time once compiled.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "LombokClarion\\Container\\": "src/"
+        }
+    }
+}
