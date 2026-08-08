@@ -14,7 +14,7 @@ use Throwable;
 /**
  * The development-time container.
  *
- * Design rules (see master prompt §2, §4.1):
+ * Design rules (see design spec §2, §4.1):
  *  - No auto-discovery. Interfaces/abstract classes MUST be bound explicitly
  *    via bind()/singleton()/instance(). There is no "scan the filesystem and
  *    guess the implementation" behaviour anywhere in this class.
@@ -61,6 +61,11 @@ final class Container implements ContainerInterface
     {
         $this->instances[$id] = $instance;
         unset($this->bindings[$id]);
+    }
+
+    public function hasInstance(string $id): bool
+    {
+        return isset($this->instances[$id]);
     }
 
     public function has(string $id): bool
@@ -135,7 +140,12 @@ final class Container implements ContainerInterface
     {
         try {
             $reflection = new ReflectionClass($class);
-        } catch (Throwable $e) {
+        }
+        // PHPStan's ReflectionClass stub proves no throw for a class-string, but
+        // that is a PHPDoc promise: an untyped caller or a failing autoloader can
+        // still make this throw at runtime. Keep the guard.
+        // @phpstan-ignore catch.neverThrown
+        catch (Throwable $e) {
             throw new ContainerException("Cannot reflect class \"$class\": {$e->getMessage()}", previous: $e);
         }
 

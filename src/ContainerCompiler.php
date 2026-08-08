@@ -21,7 +21,7 @@ use ReflectionParameter;
  * closure bindings to be given as an array callable `[FactoryClass::class,
  * 'method']`. This is enforced at compile time with a clear error — it is
  * an explicit constraint, not a silent fallback, in keeping with
- * "explicit over magic" (master prompt §2.6).
+ * "explicit over magic" (design spec §2.6).
  *
  * Limitation (by design, not oversight): the compiler discovers transitive
  * dependencies by reflecting constructor signatures. It cannot see inside

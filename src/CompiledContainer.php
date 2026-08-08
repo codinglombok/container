@@ -43,6 +43,11 @@ final class CompiledContainer implements ContainerInterface
         $this->instances[$id] = $instance;
     }
 
+    public function hasInstance(string $id): bool
+    {
+        return isset($this->instances[$id]);
+    }
+
     public function has(string $id): bool
     {
         return isset($this->instances[$id]) || isset($this->definitions[$id]);
